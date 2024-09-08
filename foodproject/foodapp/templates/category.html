@@ -1,0 +1,102 @@
+{% extends 'navbar.html' %}
+{% load static %}
+{% block content %}
+<title>
+    {% block title %}
+    SUDARSON FOODORDER
+    {% endblock title %}
+</title>
+
+{% block body %}
+    <style>
+        body {
+            background-color: #F0F8FF;
+        }
+        .carousel-item img {
+            height: 500px;
+            object-fit:fill;
+ 
+
+        }
+        .card img {
+            height: 350px;
+            object-fit: fill;
+        }
+        .card-body {
+            text-align: center;
+        }
+        .icon-btn {
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        .icon-btn:hover {
+            color: #007bff;
+        }
+        .price {
+            font-size: 1.2rem;
+            color: #000000;
+        }
+        .card-container {
+            margin-bottom: 1rem;
+        }
+        .btn {
+            margin: 2px;
+            padding: .5rem 1rem;
+            border: 2px solid #04009A;
+            cursor: pointer;
+            transition: .3s;
+            background-color: rgb(5,41,51);
+            color: #cebfbf;
+            border-radius: 0.3em;
+        }
+        input, .btn::placeholder {
+            background-color: transparent;
+            padding: .5rem;
+            border-radius: 10px;
+        }
+        form {
+            width: 100%;
+            max-width: 500px;
+        }
+        .search-input {
+            background: url('https://cdn-icons-png.flaticon.com/512/54/54481.png') no-repeat right 10px center;
+            background-size: 20px;
+            padding-right: 40px;
+        }
+    </style>
+    <div class="container">
+        <div class="container mt-5">
+            <div id="foodCards">
+                <div class="row ">
+                    {% for food in foods %}
+                    <div class="col-12 col-sm-12 col-lg-4 card-container">
+                        <div class="card" data-name="{{ food.name }}">
+                            <img src="{{ food.image.url }}" class="card-img-top" alt="{{ food.name }}">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ food.name }}</h5>
+                                <p class="card-text">{{ food.category }}</p>
+                                <p class="price">₹{{ food.amount }}</p>
+                                <span class="icon-btn" onclick="addToCart('{{ food.name }}')">➕</span>
+                                <span class="icon-btn ms-3" onclick="addToFavorites('{{ food.name }}')">❤️</span>
+                                <br><a href="{% url 'foodview' food.name  %}" class="btn btn-info" style="background-color: rgb(7, 148, 7); border-color: green; color:white;">View More</a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+<script>
+
+        function addToCart(item) {
+            alert( 'Click View More to add to cart!');
+        }
+
+        function addToFavorites(item) {
+            alert( 'Click View More to add to favorites!');
+        }
+</script>
+{% endblock body %}
+{% endblock %}
+    

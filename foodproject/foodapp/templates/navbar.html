@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+    <head>
+      <!-- Include Bootstrap CSS -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<!-- Include jQuery and Bootstrap JS for close button functionality -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+      <!-- Add Bootstrap CSS -->
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+      <!-- Add jQuery and Bootstrap JS for close button functionality -->
+      <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+      <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+      <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    </head>
+    <style>
+        nav{
+    position:sticky !important;
+    width: 100%;
+    top:0;
+    left:0;
+    box-shadow:0px 5px  rgba(0,0,0);
+    z-index:10;
+    
+  }
+
+  .navbar-brand{
+    font-weight:100;
+  }
+  .nav-link{
+    color:white !important;
+  }
+  .nav-link:hover{
+    border-bottom: 1px solid white;
+    
+  }
+
+    </style>
+    
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+          <a class="navbar-brand">SUDARSON FOODORDER</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+              <a class="nav-link" aria-current="page" href="{% url 'homepage' %}"><i class="fa fa-home"></i> Home</a>
+              {% if request.user.is_authenticated%}
+              <a class="nav-link"><i class="fa fa-user"></i> {{request.user}}</a>
+              <a class="nav-link"href="{% url 'logout' %}"><i class="fa fa-sign-out"></i>Logout</a>
+              {% else %}
+              
+              <a class="nav-link" href="{% url 'login' %}"><i class="fa fa-sign-in"></i> Login</a>
+              <a class="nav-link" href="{% url 'register' %}"><i class="fa fa-users" ></i> Register</a>
+              {% endif %}
+ 
+              <a class="nav-link" href="{% url 'food' %}"><i class="fa fa-cutlery"></i> Order Now</a>
+              <a class="nav-link" href="{% url 'cart' %}"><i class="fa fa-shopping-cart"></i> Cart</a>
+              <a class="nav-link" href="{% url 'favviewpage' %}"><i class="fa fa-heart"></i> Favourite</a>
+            </ul>
+          </div>
+        </div>
+      </nav>
+      
+    {%block content %}
+    
+    {%endblock%}
+    {%include 'footer.html'%}
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+  AOS.init();
+</script>
+</html>

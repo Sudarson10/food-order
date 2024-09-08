@@ -1,0 +1,198 @@
+{% load static %}
+{% block content %}
+<title>
+    {% block title %}
+    SUDARSON FOODORDER|SIGN-IN
+    {% endblock title %}
+</title>
+<style>
+    * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background: linear-gradient(135deg, #e48a2adc, #ef5a5ae8); /* Gradient on body */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    position: relative;
+    overflow: hidden;
+}
+
+body::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: inherit;
+    filter: blur(10px); /* Blur effect for the background */
+    z-index: -1; /* Ensure the blur is behind content */
+}
+
+.container {
+    width: 100%;
+    max-width: 400px;
+    padding: 20px;
+    position: relative;
+    background: rgba(255, 255, 255, 0.8); /* Semi-transparent background for the container */
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transform: scale(1); /* Normal scale by default */
+    transition: transform 0.3s ease;
+}
+
+.signin-box {
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.signin-box h2 {
+    margin-bottom: 20px;
+    color: #FF6600;
+}
+
+.input-group {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.btn {
+    width: 100%;
+    padding: 10px;
+    background-color: #FF6600;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 10px;
+}
+
+.btn:hover {
+    background-color: #e65a00;
+}
+
+.footer-links {
+    margin-top: 20px;
+    font-size: 14px;
+}
+
+.footer-links a {
+    color: #FF6600;
+    text-decoration: none;
+}
+
+.footer-links a:hover {
+    text-decoration: underline;
+}
+.alert {
+    position: absolute; /* Position the message absolutely */
+    top: 20px; /* Distance from the top of the page */
+    left: 50%; /* Center align horizontally */
+    transform: translateX(-50%); /* Adjust to exact center */
+    
+    color: rgb(240, 230, 230); /* Set the text color to black */
+    z-index: 1000; /* Ensure it appears above other elements */
+}
+
+.alert .close {
+    color: black; /* Close button color */
+}
+
+/* Responsive design for mobile devices */
+@media only screen and (max-width: 1000px) {
+    .container {
+        max-height: 55%;
+        max-width: 55%; /* Increase width for mobile */
+        padding: 30px;
+        transform: scale(1.1); /* Zoom in slightly */
+    }
+
+    .signin-box h2 {
+        font-size: 24px; /* Adjust heading size */
+    }
+
+    .input-group input {
+        font-size: 18px; /* Larger input text */
+    }
+
+    .btn {
+        font-size: 18px; /* Larger button text */
+        padding: 12px; /* More padding for button */
+    }
+
+    .footer-links {
+        font-size: 16px; /* Adjust footer text size */
+    }
+    .alert {
+        font-size: 24px;
+        padding: 20px;
+        max-width: 90%;
+        left: 50%;
+        transform: translateX(-50%);
+        width: auto;
+    }
+
+    .alert .close {
+        font-size: 24px;
+    }
+}
+</style>
+
+{% block body %}
+{% if messages %}
+<div class="mt-3 text-center bg-primary text-light">
+    {% for message in messages %}
+        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    {% endfor %}
+</div>
+{% endif %}
+<div class="container">
+    <div class="signin-box">
+        <h2>Sign In</h2>
+        <form method="post">
+            {%csrf_token%}
+            <div class="input-group">
+                <label for="username">Enter Your Username:</label>
+                <input type="username" id="username" name="username" required>
+            </div>
+            <div class="input-group">
+                <label for="password">Enter Password:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <button type="submit" class="btn">Sign In</button>
+            <div class="footer-links">
+                <span>Don't have an account?
+                <a  href="{% url 'register' %}">Sign Up</a></span>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock body %}
+{% endblock %}

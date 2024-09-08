@@ -1,0 +1,161 @@
+{%extends 'navbar.html'%}
+{% load static %}
+{%block title%}
+    BEAUROI
+{%endblock title%}
+{%block content%}
+<link rel="stylesheet" href="{%static 'css/style.css'%}">
+{%block body%}
+
+<style>
+
+</style>
+</head>
+
+<body>
+<section class="hero-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 col-12" id="y" data-aos="fade-right"  data-aos-easing="linear"
+            data-aos-duration="1500">
+            <h1>Enjoy <span style="color: #e74c3c; text-decoration: underline;">Delicious Food</span> by ordering here!!</h1>
+                <p>Savor Every Moment in Your Wellness Journey.
+                    Taste the Rich Flavors of Every Moment.</p>
+                <a href="{% url 'food'  %}" ><button data-aos="zoom-in">View More</button></a>
+            </div>
+
+            <div class="col-lg-6 col-12" data-aos="fade-left"  data-aos-easing="linear"
+            data-aos-duration="1500">
+                <img src="{% static 'images/kabab-removebg-preview.png'%}" alt="Healthy Food">
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="food-section bg-white">
+    <div class="container">
+        <h2 data-aos="fade-up">Our Food Categories</h2>
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3">
+            <div data-aos="zoom-in"  data-aos-easing="linear"
+            data-aos-duration="1500">
+                <div class="food-card">
+                    <img src="{% static 'images/bisi bela bath.jpeg'%}" alt="Food name">
+                    <h5>South Indian </h5>
+                    <p>South Indian foods available here.</p>
+                    <a href="{% url 'category' 'south indian' %}" class="btn btn-outline-danger">See Menu</a>
+                </div>
+            </div>
+            <div  data-aos="zoom-in" data-aos-delay="100"  data-aos-easing="linear"
+            data-aos-duration="1500">
+                <div class="food-card"> 
+                    <img src="{% static 'images/Pav bhaji.png'%}" alt="Food name">
+                    <h5>Spicy Foods</h5>
+                    <p>Spicy foods available here.</p>
+                    <a href="{% url 'category' 'spicy' %}" class="btn btn-outline-danger">See Menu</a>
+                </div>
+            </div>
+            <div  data-aos="zoom-in" data-aos-delay="200"  data-aos-easing="linear"
+            data-aos-duration="1500">
+                <div class="food-card">
+                    <img src="{% static 'images/Cheera Doi.jpeg'%}" alt="Food name">
+                    <h5>Dessert</h5>
+                    <p>Desserts available here.</p>
+                    <a href="{% url 'category' 'dessert' %}" class="btn btn-outline-danger">See Menu</a>
+                </div>
+            </div>
+            <div " data-aos="zoom-in"  data-aos-easing="linear"
+            data-aos-duration="1500">
+                <div class="food-card">
+                    <img src="{% static 'images/dal tadka.jpeg'%}" alt="Food name">
+                    <h5>North Indian </h5>
+                    <p>North Indian foods available here.</p>
+                    <a href="{% url 'category' 'north indian' %}" class="btn btn-outline-danger">See Menu</a>
+                </div>
+            </div>
+            <div  data-aos="zoom-in" data-aos-delay="100"  data-aos-easing="linear"
+            data-aos-duration="1500">
+                <div class="food-card"> 
+                    <img src="{% static 'images/chapati.png'%}" alt="Food name">
+                    <h5>Tiffin</h5>
+                    <p>Tiffins available here.</p>
+                    <a href="{% url 'category' 'tiffin' %}" class="btn btn-outline-danger">See Menu</a>
+                </div>
+            </div>
+            <div  data-aos="zoom-in" data-aos-delay="200"  data-aos-easing="linear"
+            data-aos-duration="1500">
+                <div class="food-card">
+                    <img src="{% static 'images/sweet.jpeg'%}" alt="Food name">
+                    <h5>Sweet Foods</h5>
+                    <p>Sweet Foods available here.</p>
+                    <a href="{% url 'category' 'sweets' %}" class="btn btn-outline-danger">See Menu</a>
+                </div>
+            </div>
+            <div  data-aos="zoom-in" data-aos-delay="200"  data-aos-easing="linear"
+            data-aos-duration="1500">
+                <div class="food-card">
+                    <img src="{% static 'images/red rice.jpeg'%}" alt="Food name">
+                    <h5>Lunch</h5>
+                    <p>Lunch available here.</p>
+                    <a href="{% url 'category' 'lunch' %}" class="btn btn-outline-danger">See Menu</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="popular-food-items">
+    <div class="container">
+        <h2 data-aos="fade-up"  data-aos-easing="linear"
+        data-aos-duration="1500">Our Popular Food Items</h2>
+        <div class="row row-cols-1 row-cols-lg-4">
+            <div data-aos="flip-left"
+            data-aos-easing="linear"
+            data-aos-duration="1500">
+                <div class="food-item-card">
+                    <img src="{%static 'upload_food/lassi.jpeg'%}" alt="Food name">
+                    <h5>Lassi</h5>
+                    <p>It remains the most sold food in summer season.</p>
+                    <a href="{% url 'foodview' 'Lassi' %}" class="btn btn-outline-danger">View more</a>
+                </div>
+            </div>
+            <br>
+            <div data-aos="flip-left" data-aos-delay="100"  data-aos-easing="linear"
+            data-aos-duration="1500">
+                <div class="food-item-card">
+                    <img src="{%static 'upload_food/panneer.png'%}" alt="Food name">
+                    <h5>Paneer Butter Masala</h5>
+                    <p>It remains an all-time favorite main course.</p>
+                    <a href="{% url 'foodview' "Paneer butter masala" %}" class="btn btn-outline-danger">View more</a>
+                </div>
+            </div>
+            <br>
+            <div data-aos="flip-left" data-aos-delay="200"  data-aos-easing="linear"
+            data-aos-duration="1500">
+                <div class="food-item-card">
+                    <img src="{%static 'upload_food/vada.png'%}" alt="Food name">
+                    <h5>Vada</h5>
+                    <p>It is the most popular morning breakfast food.</p>
+                    <a href="{% url 'foodview' "Vada" %}" class="btn btn-outline-danger">View more</a>
+                </div>
+            </div>
+            <br>
+            <div data-aos="flip-left" data-aos-delay="300"  data-aos-easing="linear"
+            data-aos-duration="1500">
+                <div class="food-item-card">
+                    <img src="{%static 'upload_food/panni.jpg'%}" alt="Food name">
+                    <h5>Pani Puri</h5>
+                    <p>It is the most popular evening snack food.</p>
+                    <a href="{% url 'foodview' "Pani puri" %}" class="btn btn-outline-danger">View more</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+    AOS.init();
+</script>
+{%endblock body%}
+{%endblock content%}    

@@ -1,0 +1,210 @@
+{% extends 'navbar.html' %}
+{% load static %}
+{% block content %}
+<title>
+    {% block title %}
+    SUDARSON FOODORDER
+    {% endblock title %}
+</title>
+
+{% block body %}
+    <style>
+        body {
+            background-color: #F0F8FF;
+        }
+        .carousel-item img {
+            height: 500px;
+            object-fit:fill;
+ 
+
+        }
+        .card img {
+            height: 350px;
+            object-fit: fill;
+        }
+        .card-body {
+            text-align: center;
+        }
+        .icon-btn {
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        .icon-btn:hover {
+            color: #007bff;
+        }
+        .price {
+            font-size: 1.2rem;
+            color: #000000;
+        }
+        .card-container {
+            margin-bottom: 1rem;
+        }
+        .btn {
+            margin: 2px;
+            padding: .3rem 1rem;
+            border: 2px solid #04009A;
+            cursor: pointer;
+            transition: .3s;
+            background-color: rgb(5,41,51);
+            color: #cebfbf;
+            border-radius: 0.3em;
+        }
+        input, .btn::placeholder {
+            background-color: transparent;
+            padding: .5rem;
+            border-radius: 10px;
+        }
+        form {
+            width: 100%;
+            max-width: 500px;
+        }
+        .search-input {
+            background: url('https://cdn-icons-png.flaticon.com/512/54/54481.png') no-repeat right 10px center;
+            background-size: 20px;
+            padding-right: 40px;
+        }
+    </style>
+    <div class="container">
+        <div class="container d-flex justify-content-center align-items-center" style="padding-top: 40px;">
+            <form id="searchForm" method="get" class="d-flex">
+                {% csrf_token %}
+                <input type="text" id="searchInput" class="form-control search-input" placeholder="Search for Tiffin">
+                <button type="submit" class="btn">Search</button>
+            </form>
+        </div>
+        <div id="foodCarousel" class="carousel slide mt-3" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <a href="{% url 'category' 'tiffin' %}"><img src="{% static 'images/chapati.png' %}" class="d-block w-100" alt="Dish 1"></a>
+                </div>
+                <div class="carousel-item">
+                    <a href="{% url 'category' 'dessert' %}"><img src="{% static 'images/Cheera Doi.jpeg' %}" class="d-block w-100" alt="Dish 2"></a>
+                </div>
+                <div class="carousel-item">
+                    <a href="{% url 'category' 'north indian' %}"><img src="{% static 'images/dal tadka.jpeg' %}" class="d-block w-100" alt="Dish 3"></a>
+                </div>
+                <div class="carousel-item">
+                    <a href="{% url 'category' 'lunch' %}"><img src="{% static 'images/red rice.jpeg' %}" class="d-block w-100" alt="Dish 4"></a>
+                </div>
+                <div class="carousel-item">
+                    <a href="{% url 'category' 'south indian' %}"><img src="{% static 'images/bisi bela bath.jpeg' %}" class="d-block w-100" alt="Dish 5"></a>
+                </div>
+                <div class="carousel-item">
+                    <a href="{% url 'category' 'spicy' %}"><img src="{% static 'images/pav bhaji.png' %}" class="d-block w-100" alt="Dish 6"></a>
+                </div>
+                <div class="carousel-item">
+                    <a href="{% url 'category' 'sweets' %}"><img src="{% static 'images/sweet.jpeg' %}" class="d-block w-100" alt="Dish 7"></a>
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#foodCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#foodCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+        <div class="container mt-5">
+            <div id="foodCards">
+                <div class="row">
+                    {% for food in foods %}
+                    <div class="col-12 col-md-6 col-lg-4 d-flex justify-content-center mb-4">
+                        <div class="card" style="width: 18rem;">
+                            <img src="{{ food.image.url }}" class="card-img-top" alt="{{ food.name }}">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ food.name }}</h5>
+                                <p class="card-text">{{ food.category }}</p>
+                                <p class="price">₹{{ food.amount }}</p>
+                                <span class="icon-btn" onclick="addToCart('{{ food.name }}')">➕</span>
+                                <span class="icon-btn ms-3" onclick="addToFavorites('{{ food.name }}')">❤️</span><br>
+                                <a href="{% url 'foodview' food.name %}" class="btn btn-info mt-2" style="background-color: rgb(7, 148, 7); border-color: green; color:white;">View More</a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        
+        
+        
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
+    <script>
+        function addToCart(item) {
+            alert( 'Click View More to add to cart!');
+        }
+
+        function addToFavorites(item) {
+            alert( 'Click View More to add to favorites!');
+        }
+
+
+
+        const searchTerms = [
+            { term: "Tiffin", color: "black" },
+            { term: "Desert", color: "green" },
+            { term: "North Indian", color: "blue" },
+            { term: "Lunch", color: "purple" },
+            { term: "South Indian", color: "black" },
+            { term: "Spicy", color: "red" },
+            { term: "Sweet", color: "orange" }
+        ];
+        let searchIndex = 0;
+        const intervalDuration = 5000;
+
+        const styleElement = document.createElement('style');
+        document.head.appendChild(styleElement);
+
+        const updatePlaceholderAndCarousel = () => {
+            searchIndex = (searchIndex + 1) % searchTerms.length;
+            const searchInput = document.getElementById('searchInput');
+            searchInput.setAttribute('placeholder', 'Search for ' + searchTerms[searchIndex].term);
+            styleElement.innerHTML = `#searchInput::placeholder { color: ${searchTerms[searchIndex].color}; }`;
+
+            const foodCarousel = document.getElementById('foodCarousel');
+            const carousel = bootstrap.Carousel.getInstance(foodCarousel);
+            carousel.next();
+        };
+
+        setInterval(updatePlaceholderAndCarousel, intervalDuration);
+
+        const foodCarousel = document.getElementById('foodCarousel');
+        new bootstrap.Carousel(foodCarousel, {
+            interval: intervalDuration,
+            ride: 'carousel'
+        });
+        document.getElementById('searchForm').addEventListener('submit', function(event) {
+    event.preventDefault(); // Prevent the default form submission
+
+    let postObj = { 
+        'query': document.getElementById('searchInput').value.trim()
+    };
+
+    fetch("/search/", {
+        method: 'POST',
+        credentials: 'same-origin',
+        headers: {
+            'Accept': 'application/json',
+            'X-Requested-With': 'XMLHttpRequest',
+            'X-CSRFToken': '{{ csrf_token }}',
+        },
+        body: JSON.stringify(postObj)
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.redirect) {
+            window.location.href = data.redirect_url; // Redirect to the appropriate view
+        } else {
+            alert(data.message); // Display an alert if no match is found
+        }
+    })
+    .catch(error => console.error('Error:', error));
+});
+
+    </script>
+{% endblock body %}
+{% endblock %}

@@ -1,0 +1,140 @@
+{% extends 'navbar.html' %}
+{% block content %}
+{% csrf_token %}
+
+<section class="bg-light py-4 my-5" style="min-height: 600px;">
+    <div class="container">
+        <div class="row justify-content-center">
+            {% for item in food %}
+            <div class="col-12 ">
+                <h4 class="mb-3 text-center"><b>{{ item.name }}</b></h4>
+                <hr style="border-color:#b8bfc2;">
+            </div>
+            <div class="card" style="width: 38rem;">
+                <img src="{{ item.image.url }}" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="text-primary"><b class="text-success">Flavour Profile:</b>{{ item.flavour_profile | upper }}</h5>
+                    <h5 class="text-primary"><b class="text-success">Course: </b> {{ item.course | upper }}</h5>
+                    <h5 class="text-primary"><b class="text-success">State: </b> {{ item.state | upper }}</h5>
+                    <h5 class="text-primary"><b class="text-success">Region: </b> {{ item.region | upper }}</h5>
+                    <p class="text-primary"><b class="text-success">Ingredients: </b> <span class="text-danger">{{ item.ingredients }}</span></p>
+                    <h5 class="text-warning"><b class="text-success">Ratings: </b> {{ item.ratings }}<i class="bi bi-star-fill" id="star"></i><i class="bi bi-star-fill" id="star"></i><i class="bi bi-star-fill" id="star"></i><i class="bi bi-star-fill" id="star"></i><i class="bi bi-star-half" id="half-star"></i></h5>
+                    <h5 class="text-primary"><b class="text-success">Price:  &#8377;</b> {{ item.amount}}</h5>
+    
+                    <div class="my-3">
+                        <input type="hidden" value="{{ item.id }}" id="pid">
+    
+                        <div class="input-group mb-3" style="width:150px">
+                            <button class="input-group-text bg-success text-light" id="btnMinus">
+                                <i class="fa fa-minus"></i>
+                            </button>
+                            <input type="text" name="qty" id="txtQty" value="1" class="form-control text-center">
+                            <button class="input-group-text bg-success text-light" id="btnPlus">
+                                <i class="fa fa-plus"></i>
+                            </button>
+                        </div>
+    
+                        <button class="btn btn-primary mb-2" id="btnCart">
+                            <i class="fa fa-shopping-cart"></i> Add To Cart
+                        </button>
+                        <button class="btn btn-danger mb-2" id="btnFav">
+                            <i class="fa fa-heart"></i>
+                        </button>
+                    </div>
+              </div>
+
+
+
+            {% endfor %}
+        </div>
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function(event) {
+          const btnPlus = document.getElementById("btnPlus");
+          const btnMinus = document.getElementById("btnMinus");
+          const txtQty = document.getElementById("txtQty");
+          const pid = document.getElementById("pid");
+          const btnCart = document.getElementById("btnCart");
+          const btnFav = document.getElementById("btnFav");
+        
+          btnPlus.addEventListener("click", function() {
+            let qty=parseInt(txtQty.value,10);
+            qty=isNaN(qty)?0:qty;
+            //console.log(qty);
+            if(qty<10){
+              qty++;
+              txtQty.value=qty;
+            }
+          });
+          btnMinus.addEventListener("click", function() {
+            let qty=parseInt(txtQty.value,10);
+            qty=isNaN(qty)?0:qty;
+            //console.log(qty);
+            if(qty>1){
+              qty--;
+              txtQty.value=qty;
+            }
+          });
+        
+          btnCart.addEventListener("click", function() {
+            let qty=parseInt(txtQty.value,10);
+            qty=isNaN(qty)?0:qty;
+            
+            if(qty>0){
+              let postObj = { 
+                  'food_qty': qty, 
+                  'pid': pid.value
+              }
+              console.log(postObj);
+              fetch("/add_cart",{
+                method: 'POST',
+                credentials: 'same-origin',
+                headers:{
+                    'Accept': 'application/json',
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'X-CSRFToken': '{{ csrf_token }}',
+                },
+                body: JSON.stringify(postObj)
+              }).then(response => {
+                  return response.json();
+              }).then(data => {
+                  console.log(data);
+                alert(data['status']);
+              });
+            }else{
+              alert("Please Enter The Quantity");
+            }
+            
+        });
+      
+      
+        btnFav.addEventListener("click", function() {
+           
+              let postObj = { 
+                  'pid': pid.value
+              }
+              console.log(postObj);
+              fetch("/fav",{
+                method: 'POST',
+                credentials: 'same-origin',
+                headers:{
+                    'Accept': 'application/json',
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'X-CSRFToken': '{{ csrf_token }}',
+                },
+                body: JSON.stringify(postObj)
+              }).then(response => {
+                  return response.json();
+              }).then(data => {
+                  //console.log(data);
+                alert(data['status']);
+              });
+            
+        });
+      
+      
+      });
+       </script>
+      
+</section>
+{% endblock content %}
