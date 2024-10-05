@@ -61,11 +61,11 @@ def logout_page(request):
 def food(request):
     recommendations = []
     
-    # Check if there is a food history for the user
+    # Check if there is a food history exist
     user_foods = FoodMl.objects.filter(username=request.user.username)
     if user_foods.exists():
         d = {}
-        # Retrieve the latest searched food items for the user
+
         latest_foods = FoodMl.objects.filter(username=request.user.username).order_by('-time')
         
         for food in latest_foods:
@@ -74,23 +74,22 @@ def food(request):
             else:
                 d[food.food] += 1
 
-        # Sort the dictionary `d` from highest to lowest value
         d = OrderedDict(sorted(d.items(), key=lambda item: item[1], reverse=True))
 
-        # Prioritize the latest searched food
-        latest_searched_food = next(iter(latest_foods)).food  # Ensure we get the actual latest searched food
+        
+        latest_searched_food = next(iter(latest_foods)).food  
 
-        # Generate recommendations for the latest searched food
+        
         list1 = list(ml.recommend_similar_foods(latest_searched_food, 5))
         recommendations.extend(list1)
 
         if len(d) == 2:
-            # Get the food with the highest value in dict `d` that is not the latest searched food
+            
             second_food = next(food for food in d if food != latest_searched_food)
             list2 = list(ml.recommend_similar_foods(second_food, 5))
             recommendations.extend(list2)
         elif len(d) >= 3:
-            # Get the food with the highest and second highest value in dict `d` that are not the latest searched food
+            
             second_food = next(food for food in d if food != latest_searched_food)
             third_food = next(food for food in d if food != latest_searched_food and food != second_food)
             list2 = list(ml.recommend_similar_foods(second_food, 5))
@@ -98,33 +97,45 @@ def food(request):
             recommendations.extend(list2)
             recommendations.extend(list3)
         
-        # Ensure recommendations are unique
-        recommendations = list(OrderedDict.fromkeys(recommendations))  # Removes duplicates and maintains order
+        
+        recommendations = list(OrderedDict.fromkeys(recommendations))  
 
-        # Add random unique elements if necessary to reach 15 items
+        
         if len(recommendations) < 15:
             unique_randoms = df['Name'].sample(n=15).tolist()
             random_elements = [i for i in unique_randoms if i not in recommendations]
             recommendations.extend(random_elements)
+        # Ensure exactly 15 unique recommendations
+        recommended_food_names = recommendations[:15]  
 
-        recommended_food_names = recommendations[:15]  # Ensure exactly 15 unique recommendations
+        
+        recommended_foods = []
+        for name in recommended_food_names:
+            
+            food_item = Food.objects.filter(name=name, availability=True).first()
+            if food_item:
+                recommended_foods.append(food_item)
 
-        # Query the database for food items matching the recommended food names
-        recommended_foods = Food.objects.filter(name__in=recommended_food_names, availability=True)
         print(recommended_food_names)
 
-    # If no food history exists for the user or if recommendations are empty
+    # If no food history exists 
     if not user_foods.exists():
-        recommendations=[]
+        recommendations = []
 
         unique_randoms = df['Name'].sample(n=15).tolist()
         random_elements = [i for i in unique_randoms if i not in recommendations]
         recommendations.extend(random_elements)
         recommended_food_names = recommendations[:15]  # Ensure exactly 15 unique recommendations
-        recommended_foods = Food.objects.filter(name__in=recommended_food_names, availability=True)
-        print(recommended_food_names)
+        recommended_foods = []
+        for name in recommended_food_names:
+            food_item = Food.objects.filter(name=name, availability=True).first()
+            if food_item:
+                recommended_foods.append(food_item)
+       
+    
+    # Pass the recommended foods to html
     return render(request, 'food.html', {'foods': recommended_foods})
-@login_required(login_url="login")
+@login_required(login_url="login")  
 def foodview(request, name):
     FoodMl.objects.create(
     username=request.user.username,

@@ -76,8 +76,11 @@
                                 <h5 class="card-title">{{ food.name }}</h5>
                                 <p class="card-text">{{ food.category }}</p>
                                 <p class="price">₹{{ food.amount }}</p>
+                                <!--
                                 <span class="icon-btn" onclick="addToCart('{{ food.name }}')">➕</span>
-                                <span class="icon-btn ms-3" onclick="addToFavorites('{{ food.name }}')">❤️</span>
+                                -->
+                                
+                                
                                 <br><a href="{% url 'foodview' food.name  %}" class="btn btn-info" style="background-color: rgb(7, 148, 7); border-color: green; color:white;">View More</a>
                             </div>
                         </div>
