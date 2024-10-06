@@ -3,8 +3,8 @@ from sklearn.preprocessing import OneHotEncoder
 from sklearn.neighbors import NearestNeighbors
 import numpy as np
 import pickle
-
-
+import os
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 class FoodRecommender:
     def __init__(self, food_data_path, model_path, encoder_path):
         # Read the Excel file and pickle files
