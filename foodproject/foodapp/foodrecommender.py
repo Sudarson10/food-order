@@ -36,4 +36,4 @@ class FoodRecommender:
         recommended_dishes = self.food_data.iloc[indices[0]]['Name'].values
 
         return recommended_dishes[:]
-
+  

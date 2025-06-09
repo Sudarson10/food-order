@@ -26,8 +26,7 @@
     
                     <div class="my-3">
                         <input type="hidden" value="{{ item.id }}" id="pid">
-                        <!--
-                                                <div class="input-group mb-3" style="width:150px">
+                        <div class="input-group mb-3" style="width:150px">
                             <button class="input-group-text bg-success text-light" id="btnMinus">
                                 <i class="fa fa-minus"></i>
                             </button>
@@ -40,7 +39,7 @@
                         <button class="btn btn-primary mb-2" id="btnCart">
                             <i class="fa fa-shopping-cart"></i> Add To Cart
                         </button>
-                        -->
+                        
                         <center>
                           <button class="btn btn-danger mb-2" id="btnFav">
                             <i class="fa fa-heart"></i>
@@ -56,7 +55,7 @@
         </div>
     </div>
     <script>
-          /*
+          
         document.addEventListener("DOMContentLoaded", function(event) {
           const btnPlus = document.getElementById("btnPlus");
           const btnMinus = document.getElementById("btnMinus");
@@ -142,83 +141,8 @@
       
       
       });
-      */
-      document.addEventListener("DOMContentLoaded", function(event) {
-    const btnPlus = document.getElementById("btnPlus");
-    const btnMinus = document.getElementById("btnMinus");
-    const txtQty = document.getElementById("txtQty");
-    const pid = document.getElementById("pid");
-    const btnCart = document.getElementById("btnCart");
-    const btnFav = document.getElementById("btnFav");
+      
 
-    if (btnPlus && btnMinus && txtQty) {
-        btnPlus.addEventListener("click", function() {
-            let qty = parseInt(txtQty.value, 10);
-            qty = isNaN(qty) ? 0 : qty;
-            if (qty < 10) {
-                qty++;
-                txtQty.value = qty;
-            }
-        });
-
-        btnMinus.addEventListener("click", function() {
-            let qty = parseInt(txtQty.value, 10);
-            qty = isNaN(qty) ? 0 : qty;
-            if (qty > 1) {
-                qty--;
-                txtQty.value = qty;
-            }
-        });
-    }
-
-    if (btnCart) {
-        btnCart.addEventListener("click", function() {
-            let qty = parseInt(txtQty.value, 10);
-            qty = isNaN(qty) ? 0 : qty;
-            
-            if (qty > 0) {
-                let postObj = { 
-                    'food_qty': qty, 
-                    'pid': pid.value
-                };
-                fetch("/add_cart", {
-                    method: 'POST',
-                    credentials: 'same-origin',
-                    headers: {
-                        'Accept': 'application/json',
-                        'X-Requested-With': 'XMLHttpRequest',
-                        'X-CSRFToken': '{{ csrf_token }}',
-                    },
-                    body: JSON.stringify(postObj)
-                }).then(response => response.json()).then(data => {
-                    alert(data['status']);
-                });
-            } else {
-                alert("Please Enter The Quantity");
-            }
-        });
-    }
-
-    if (btnFav) {
-        btnFav.addEventListener("click", function() {
-            let postObj = { 
-                'pid': pid.value
-            };
-            fetch("/fav", {
-                method: 'POST',
-                credentials: 'same-origin',
-                headers: {
-                    'Accept': 'application/json',
-                    'X-Requested-With': 'XMLHttpRequest',
-                    'X-CSRFToken': '{{ csrf_token }}',
-                },
-                body: JSON.stringify(postObj)
-            }).then(response => response.json()).then(data => {
-                alert(data['status']);
-            });
-        });
-    }
-});
        </script>
       
 </section>

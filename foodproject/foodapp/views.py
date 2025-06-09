@@ -117,7 +117,7 @@ def food(request):
                 recommended_foods.append(food_item)
 
         print(recommended_food_names)
-
+        print(recommendations)
     # If no food history exists 
     if not user_foods.exists():
         recommendations = []
